@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { LineChart, Bot, Sparkles } from 'lucide-react'
 
 function MarketingAIBackdrop() {
-  // Positions for AI network nodes
+  // Positions for AI glyphs
   const nodes = [
     { x: 120, y: 120 },
     { x: 280, y: 180 },
@@ -13,6 +13,35 @@ function MarketingAIBackdrop() {
     { x: 860, y: 220 },
     { x: 1020, y: 160 },
   ]
+
+  const AiGlyph = ({ x, y, idx }) => (
+    <motion.g
+      transform={`translate(${x - 12} ${y - 12})`}
+      initial={{ opacity: 0.6, scale: 0.96 }}
+      animate={{ opacity: [0.55, 1, 0.55], scale: [0.94, 1.06, 0.94] }}
+      transition={{ duration: 3 + (idx % 3), repeat: Infinity, ease: 'easeInOut' }}
+    >
+      {/* Chip body */}
+      <rect x="0" y="0" width="24" height="24" rx="6" fill="#0ea5e9" opacity="0.08" />
+      <rect x="0.5" y="0.5" width="23" height="23" rx="6" fill="none" stroke="#a78bfa" strokeOpacity="0.35" />
+
+      {/* Pins (suggesting AI hardware) */}
+      {[2, 6, 18, 22].map((px) => (
+        <>
+          <rect key={`t-${px}`} x={px} y={-2} width="1.5" height="3" fill="#94a3b8" opacity="0.5" />
+          <rect key={`b-${px}`} x={px} y={23} width="1.5" height="3" fill="#94a3b8" opacity="0.5" />
+        </>
+      ))}
+
+      {/* Stylized 'A' */}
+      <path d="M5 17 L9 7 L13 17" fill="none" stroke="#e2e8f0" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="7.5" y1="13" x2="10.5" y2="13" stroke="#e2e8f0" strokeWidth="1.6" strokeLinecap="round" />
+      {/* Stylized 'I' */}
+      <line x1="17" y1="7.5" x2="17" y2="16.5" stroke="#e2e8f0" strokeWidth="1.6" strokeLinecap="round" />
+      <line x1="15.2" y1="7.5" x2="18.8" y2="7.5" stroke="#e2e8f0" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
+      <line x1="15.2" y1="16.5" x2="18.8" y2="16.5" stroke="#e2e8f0" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
+    </motion.g>
+  )
 
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -65,19 +94,12 @@ function MarketingAIBackdrop() {
           )
         })}
 
-        {/* AI network nodes + edges */}
+        {/* AI glyphs replacing round growing nodes */}
         {nodes.map((n, idx) => (
-          <motion.circle
-            key={`node-${idx}`}
-            cx={n.x}
-            cy={n.y}
-            r="5"
-            fill="#93c5fd"
-            opacity="0.5"
-            animate={{ r: [4, 6, 4], opacity: [0.35, 0.6, 0.35] }}
-            transition={{ duration: 3 + (idx % 3), repeat: Infinity, ease: 'easeInOut' }}
-          />
+          <AiGlyph key={`glyph-${idx}`} x={n.x} y={n.y} idx={idx} />
         ))}
+
+        {/* edges connecting glyphs */}
         {nodes.slice(0, -1).map((n, i) => (
           <line
             key={`edge-${i}`}
