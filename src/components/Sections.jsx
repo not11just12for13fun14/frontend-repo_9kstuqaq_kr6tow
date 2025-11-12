@@ -1,4 +1,4 @@
-import { CheckCircle2, LineChart, Bot, Sparkles, BarChart3, PenTool, Brain, Mail } from 'lucide-react'
+import { CheckCircle2, LineChart, Bot, Sparkles, BarChart3, PenTool, Brain, Mail, Megaphone, MessageSquare } from 'lucide-react'
 
 export function About() {
   return (
@@ -12,6 +12,7 @@ export function About() {
               'Automation across the funnel',
               'Predictive media mix and bidding',
               'Content intelligence for every channel',
+              'Meta & Google Ads excellence with AI optimization',
             ].map((t) => (
               <li key={t} className="flex items-start gap-3 text-gray-300"><CheckCircle2 className="text-cyan-400 mt-0.5" /> {t}</li>
             ))}
@@ -37,16 +38,21 @@ export function About() {
 
 export function Services() {
   const items = [
-    { icon: Bot, title: 'AI Marketing Automation', desc: 'Trigger-based journeys, lead scoring, and lifecycle automation.' },
-    { icon: Sparkles, title: 'Content Intelligence', desc: 'Generate and optimize creatives with AI-guided messaging.' },
-    { icon: Brain, title: 'Predictive Ad Optimization', desc: 'Budget pacing, bid recommendations, and channel mix models.' },
-    { icon: BarChart3, title: 'Data Analytics & Insights', desc: 'Full-funnel dashboards and attribution analysis.' },
+    { icon: Megaphone, title: 'Meta Ads Management', desc: 'Full-funnel campaigns across Facebook & Instagram with creative testing and AI-driven optimization.' },
+    { icon: Megaphone, title: 'Google Ads Management', desc: 'Search, Performance Max, YouTube, and Display with predictive bidding and budget pacing.' },
+    { icon: Bot, title: 'Custom AI Chatbots', desc: 'Website, WhatsApp, Instagram, and Messenger bots that qualify leads and book meetings 24/7.' },
+    { icon: Brain, title: 'Marketing Automation', desc: 'Trigger-based journeys, lead scoring, lifecycle nurtures, and CRM workflows—end-to-end.' },
+    { icon: LineChart, title: 'Predictive Ad Optimization', desc: 'Budget pacing, bid recommendations, and channel mix models.' },
+    { icon: BarChart3, title: 'Data Analytics & Insights', desc: 'Full-funnel dashboards, attribution analysis, and anomaly alerts.' },
+    { icon: Sparkles, title: 'Content Intelligence', desc: 'Generate and optimize creatives with AI-guided messaging and asset scoring.' },
     { icon: PenTool, title: 'Branding & Creative Strategy', desc: 'Distinctive brand systems and thumb-stopping assets.' },
   ]
+  const platforms = ['Meta', 'Google Ads', 'YouTube', 'WhatsApp', 'Instagram', 'Messenger', 'Web Chat']
   return (
     <section id="services" className="bg-[#0b0f1a] py-20">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center">Our Services</h2>
+        <p className="mt-4 text-gray-300 text-center max-w-3xl mx-auto">We provide complete automation for your acquisition, activation, and retention—plus high-performance paid media across Meta and Google.</p>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="rounded-xl border border-white/10 bg-gradient-to-b from-white/5 to-white/0 p-6 hover:from-white/10 transition">
@@ -55,6 +61,17 @@ export function Services() {
               <p className="mt-2 text-gray-300">{desc}</p>
             </div>
           ))}
+        </div>
+        <div className="mt-10 rounded-xl border border-white/10 bg-white/5 p-5">
+          <div className="flex items-center gap-2 text-cyan-300">
+            <MessageSquare className="h-4 w-4" />
+            <span className="text-sm">Platforms we automate</span>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {platforms.map((p) => (
+              <span key={p} className="px-3 py-1 text-xs rounded-full border border-white/10 bg-black/40 text-gray-200">{p}</span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
