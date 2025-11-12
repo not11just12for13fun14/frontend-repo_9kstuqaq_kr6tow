@@ -2,6 +2,123 @@ import Spline from '@splinetool/react-spline'
 import { motion } from 'framer-motion'
 import { LineChart, Bot, Sparkles } from 'lucide-react'
 
+function MarketingAIBackdrop() {
+  // Positions for AI network nodes
+  const nodes = [
+    { x: 120, y: 120 },
+    { x: 280, y: 180 },
+    { x: 420, y: 100 },
+    { x: 560, y: 200 },
+    { x: 700, y: 140 },
+    { x: 860, y: 220 },
+    { x: 1020, y: 160 },
+  ]
+
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      {/* Subtle marketing grid */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1440 800" aria-hidden>
+        {/* Gradient backdrop */}
+        <defs>
+          <linearGradient id="gradGlow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#6366f1" stopOpacity="0.12" />
+          </linearGradient>
+          <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#a855f7" />
+          </linearGradient>
+        </defs>
+
+        {/* soft gradient wash */}
+        <rect x="0" y="0" width="1440" height="800" fill="url(#gradGlow)" />
+
+        {/* grid */}
+        {[...Array(18)].map((_, i) => (
+          <line key={`v-${i}`} x1={i * 80} y1={0} x2={i * 80} y2={800} stroke="#ffffff10" strokeWidth="1" />
+        ))}
+        {[...Array(11)].map((_, i) => (
+          <line key={`h-${i}`} x1={0} y1={i * 72} x2={1440} y2={i * 72} stroke="#ffffff10" strokeWidth="1" />
+        ))}
+
+        {/* Sparkline that animates like growing ROAS */}
+        <motion.path
+          d="M 80 560 C 200 520, 260 500, 340 520 S 480 560, 560 520 680 440, 760 460 900 520, 1040 420 1240 360, 1360 300"
+          fill="none"
+          stroke="url(#spark)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0.8 }}
+          animate={{ pathLength: [0, 1, 0.95, 1], opacity: [0.6, 1, 0.9, 1] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Candles to suggest ad performance */}
+        {[...Array(14)].map((_, i) => {
+          const x = 120 + i * 90
+          const h = 20 + ((i * 37) % 60)
+          return (
+            <g key={`c-${i}`}>
+              <rect x={x} y={520 - h} width="8" height={h} fill="#22d3ee" opacity="0.3" rx="2" />
+              <rect x={x + 10} y={520 - Math.max(10, h - 12)} width="8" height={Math.max(10, h - 12)} fill="#a855f7" opacity="0.25" rx="2" />
+            </g>
+          )
+        })}
+
+        {/* AI network nodes + edges */}
+        {nodes.map((n, idx) => (
+          <motion.circle
+            key={`node-${idx}`}
+            cx={n.x}
+            cy={n.y}
+            r="5"
+            fill="#93c5fd"
+            opacity="0.5"
+            animate={{ r: [4, 6, 4], opacity: [0.35, 0.6, 0.35] }}
+            transition={{ duration: 3 + (idx % 3), repeat: Infinity, ease: 'easeInOut' }}
+          />
+        ))}
+        {nodes.slice(0, -1).map((n, i) => (
+          <line
+            key={`edge-${i}`}
+            x1={n.x}
+            y1={n.y}
+            x2={nodes[i + 1].x}
+            y2={nodes[i + 1].y}
+            stroke="#ffffff22"
+            strokeWidth="1.5"
+          />
+        ))}
+      </svg>
+
+      {/* Floating platform chips for clear marketing context */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-wrap items-center justify-center gap-3 opacity-70">
+        {[
+          'Meta Ads',
+          'Google Ads',
+          'YouTube',
+          'Instagram',
+          'Messenger',
+          'WhatsApp',
+          'Web Chat',
+        ].map((label, i) => (
+          <motion.div
+            key={label}
+            className="text-[11px] sm:text-xs px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur text-white"
+            initial={{ opacity: 0, y: 6 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-20% 0px -20% 0px' }}
+            transition={{ delay: i * 0.08, duration: 0.4 }}
+            animate={{ y: [0, -3, 0] }}
+          >
+            {label}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Hero() {
   const float = {
     initial: { y: 0 },
@@ -17,6 +134,9 @@ export default function Hero() {
       <div className="absolute inset-0">
         <Spline scene="https://prod.spline.design/4cHQr84zOGAHOehh/scene.splinecode" style={{ width: '100%', height: '100%' }} />
       </div>
+
+      {/* Marketing + AI illustrative backdrop overlay */}
+      <MarketingAIBackdrop />
 
       {/* AI glow layers */}
       <motion.div
